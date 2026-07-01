@@ -1,0 +1,7 @@
+title: Cheat Sheets
+description: Quick-reference guides for developers
+markdown: kramdown
+plugins:
+  - jekyll-default-layout
+kramdown:
+  input: GFM
