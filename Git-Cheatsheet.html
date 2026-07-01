@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git Cheatsheet for Beginners</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card-bg: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent-green: #3fb950;
+    --accent-blue: #58a6ff;
+    --accent-purple: #bc8cff;
+    --accent-orange: #d29922;
+    --accent-red: #f85149;
+    --accent-cyan: #39d2c0;
+    --accent-pink: #f778ba;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2.5rem;
+    background: linear-gradient(135deg, #1a1e2e, #0d1117);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+  }
+  .header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header p { color: var(--muted); font-size: 1.1rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 1.5rem;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #484f58; }
+  .card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .card h2 .icon { margin-right: 0.4rem; }
+  .green { color: var(--accent-green); }
+  .blue { color: var(--accent-blue); }
+  .purple { color: var(--accent-purple); }
+  .orange { color: var(--accent-orange); }
+  .red { color: var(--accent-red); }
+  .cyan { color: var(--accent-cyan); }
+  .pink { color: var(--accent-pink); }
+
+  code {
+    background: #0d1117;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-family: 'Cascadia Code', 'Fira Code', 'SF Mono', Consolas, monospace;
+    font-size: 0.88rem;
+    color: var(--accent-green);
+    border: 1px solid var(--border);
+  }
+  pre { background: #0d1117; padding: 0.9rem 1rem; border-radius: 6px; margin: 0.5rem 0; overflow-x: auto; border: 1px solid var(--border); }
+  pre code { background: none; border: none; padding: 0; color: var(--accent-green); font-size: 0.85rem; display: block; line-height: 1.7; }
+
+  .note {
+    background: rgba(88, 166, 255, 0.08);
+    border-left: 3px solid var(--accent-blue);
+    padding: 0.7rem 1rem;
+    margin-top: 0.6rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .note strong { color: var(--accent-blue); }
+
+  ul { list-style: none; padding-left: 0.2rem; }
+  li { margin: 0.35rem 0; font-size: 0.95rem; }
+  .full-width { grid-column: 1 / -1; }
+  .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; }
+  .mini-item { background: #0d1117; padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid var(--border); font-size: 0.88rem; }
+  footer { text-align: center; margin-top: 3rem; color: var(--muted); font-size: 0.9rem; padding: 1rem; }
+
+  @media print {
+    body { background: white; color: black; padding: 1rem; }
+    .card { break-inside: avoid; border: 1px solid #ccc; background: white; }
+    code, pre, .note, .mini-item { color: #333 !important; border-color: #ccc; background: #f8f8f8 !important; }
+    h2 .icon, .green, .blue, .purple, .orange, .red, .cyan, .pink { color: #333 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📖 Git Cheatsheet</h1>
+  <p>A beginner-friendly reference for version control — print it out and keep it on your desk!</p>
+</div>
+
+<div class="grid">
+
+  <!-- GETTING STARTED -->
+  <div class="card">
+    <h2><span class="icon">🚀</span><span class="blue">Getting Started</span></h2>
+    <ul>
+      <li><code>git init</code> — Start a new repository in the current folder</li>
+      <li><code>git clone &lt;url&gt;</code> — Copy a remote repo to your machine</li>
+      <li><code>git config --global user.name "Your Name"</code></li>
+      <li><code>git config --global user.email you@email.com</code></li>
+    </ul>
+    <div class="note">
+      <strong>Tip:</strong> Always configure your name &amp; email before committing. Your git username shows up on every commit.
+    </div>
+  </div>
+
+  <!-- CHECKING STATUS -->
+  <div class="card">
+    <h2><span class="icon">👀</span><span class="green">Status &amp; Log</span></h2>
+    <ul>
+      <li><code>git status</code> — See what's changed, staged, or untracked</li>
+      <li><code>git diff</code> — Show unstaged changes in detail</li>
+      <li><code>git diff --staged</code> — Show what you're about to commit</li>
+      <li><code>git log</code> — View commit history</li>
+      <li><code>git log --oneline</code> — Compact, one line per commit</li>
+      <li><code>git log --graph --oneline</code> — Visual branch history</li>
+    </ul>
+    <div class="note">
+      <strong>Run this daily:</strong> <code>git status</code> and <code>git log</code>. You can't get lost if you know where you are.
+    </div>
+  </div>
+
+  <!-- STAGING -->
+  <div class="card">
+    <h2><span class="icon">📦</span><span class="purple">Staging &amp; Committing</span></h2>
+    <ul>
+      <li><code>git add file.txt</code> — Stage one specific file</li>
+      <li><code>git add .</code> — Stage all changed files in the folder</li>
+      <li><code>git commit -m "describe what you did"</code> — Save your changes</li>
+      <li><code>git commit --amend</code> — Edit the most recent commit message</li>
+    </ul>
+    <pre>
+<span style="color: #8b949e"># The golden rule of commits:</span>
+<span style="color: #3fb950">git commit -m "fix login button typo"</span>
+      </pre>
+    <div class="note">
+      <strong>Good commit message:</strong> Be specific and present tense. Instead of "fix stuff" write "fix sign-up form validation on Safari."
+    </div>
+  </div>
+
+  <!-- BRANCHES -->
+  <div class="card">
+    <h2><span class="icon">🌿</span><span class="cyan">Branches — Your Superpower</span></h2>
+    <ul>
+      <li><code>git branch</code> — List all branches (current has a <span style="color:#3fb950">★</span>)</li>
+      <li><code>git branch feature/login</code> — Create a new branch</li>
+      <li><code>git checkout feature/login</code> — Switch to that branch</li>
+      <li><code>git checkout -b feature/login</code> — Create AND switch (shortcut)</li>
+      <li><code>git merge feature/login</code> — Merge a branch into the current one</li>
+      <li><code>git branch -d feature/login</code> — Delete a merged branch</li>
+    </ul>
+    <pre>
+<span style="color: #8b949e"># Typical workflow:</span>
+<span style="color: #58a6ff">git checkout -b feature/add-search</span>
+<span style="color: #3fb950"># ... make changes and commit ...</span>
+<span style="color:#3fb950">git commit -m "add search to header"</span>
+<span style="color: #bc8cff">git checkout main</span>
+<span style="color: #d29922">git merge feature/add-search</span>
+      </pre>
+    <div class="note">
+      <strong>Why?</strong> Branches let you experiment safely without breaking your working code. Delete the branch when done — nothing bad happened.
+    </div>
+  </div>
+
+  <!-- PUSHING -->
+  <div class="card">
+    <h2><span class="icon">☁️</span><span class="orange">Remote Repositories</span></h2>
+    <ul>
+      <li><code>git remote -v</code> — See connected remotes (origin)</li>
+      <li><code>git push origin main</code> — Upload your commits to GitHub/GitLab</li>
+      <li><code>git pull origin main</code> — Download others' changes &amp; merge them</li>
+      <li><code>git fetch origin</code> — Download changes without merging</li>
+    </ul>
+    <pre>
+<span style="color: #8b949e"># After finishing a feature:</span>
+<span style="color: #bc8cff">git checkout main</span>
+<span style="color:#3fb950">git push origin main</span>      <span style="color: #8b949e"># Push your local main upstream</span>
+    </pre>
+    <div class="note">
+      <strong>Daily loop:</strong> <code>git pull</code> before you start → work → <code>git push</code> when done. Never work on stale code.
+    </div>
+  </div>
+
+  <!-- UNDO / MISTAKES -->
+  <div class="card">
+    <h2><span class="icon">↩️</span><span class="red">Oh No — Undo &amp; Fix Things</span></h2>
+    <ul>
+      <li><code>git restore file.txt</code> — Discard changes to a file</li>
+      <li><code>git rm --cached file.txt</code> — Stop tracking a file (keep on disk)</li>
+      <li><code>git stash</code> — Temporarily hide uncommitted changes</li>
+      <li><code>git stash pop</code> — Bring those hidden changes back</li>
+      <li><code>git reset --soft HEAD~1</code> — Unstage the last commit (keep changes)</li>
+      <li><code>git reflog</code> — Find any lost commit by SHA</li>
+    </ul>
+    <pre>
+<span style="color: #8b949e"># Accidentally committed wrong files?</span>
+<span style="color: #f85149">git reset HEAD~1 --soft</span>     <span style="color: #8b949e"># Commit exists, but un-stages it</span>
+    </pre>
+    <div class="note">
+      <strong>Panic button:</strong> If you've already pushed a bad commit, don't panic. Tell your team and ask them to <code>git pull --rebase</code> while you fix it locally and push again.
+    </div>
+  </div>
+
+  <!-- PULL REQUESTS -->
+  <div class="card">
+    <h2><span class="icon">🔀</span><span class="purple">Pull / Merge Requests</span></h2>
+    <ul>
+      <li>Branch → Push → Open a PR on GitHub/GitLab</li>
+      <li>Add a description of <em>what</em> changed and <em>why</em></li>
+      <li>Request a reviewer from your team</li>
+      <li>Address review feedback with new commits</li>
+    </ul>
+    <pre>
+<span style="color: #8b949e"># PR description template:</span>
+<span style="color:#3fb950">## What &amp; Why</span>
+Added dark mode toggle to the settings page...
+
+<span style="color:#3fb950">## Testing</span>
+- Toggled on/off — works in Chrome & Firefox
+- No console errors
+    </pre>
+  </div>
+
+  <!-- CONFLICTS -->
+  <div class="card">
+    <h2><span class="icon">💥</span><span class="orange">Merge Conflicts (Don't Panic!)</span></h2>
+    <ul>
+      <li><code>git pull origin main</code> → conflict appears in files</li>
+      <li>Open the file — look for <code>&lt;&lt;&lt;&lt;&lt;</code> markers</li>
+      <li>Edit to keep the parts you want, delete markers</li>
+      <li><code>git add &lt;file&gt;</code> → <code>git commit -m "resolve merge conflict"</code></li>
+    </ul>
+    <pre>
+<span style="color: #d29922">&lt;&lt;&lt;&lt;&lt; feature/login</span>
+  password = input("Enter password")
+<span style="color:#3fb950">=======</span>
+  email = input("Enter email")
+<span style="color: #f85149">&gt;&gt;&gt;&gt;&gt; main</span>
+      </pre>
+    <div class="note">
+      <strong>Rationale:</strong> The code between <span style="color:#3fb950">=======</span> is yours; the other side is theirs. Keep what makes sense for each and remove the markers.
+    </div>
+  </div>
+
+  <!-- USEFUL SHORTCUTS -->
+  <div class="card full-width">
+    <h2><span class="icon">⚡</span><span class="pink">Quick Tips &amp; Gotchas</span></h2>
+    <div class="mini-grid">
+      <div class="mini-item"><code>.gitignore</code> — List files to never track (node_modules/, .env, *.pyc)</div>
+      <div class="mini-item"><code>git shortlog -sn --all</code> — Who contributed the most? 🏆</div>
+      <div class="mini-item">Commit often, push when ready. Git is cheap to commit.</div>
+      <div class="mini-item">Use <code>git diff --cached</code> before every commit to double-check</div>
+      <div class="mini-item"><code>git bisect start → bad/good</code> — Binary search for which commit broke something</div>
+      <div class="mini-item">Never force-push shared branches (<code>git push --force-with-lease</code>)</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Made with ❤️ for the next generation of developers — keep building! 🚀
+</footer>
+
+</body>
+</html>
