@@ -356,14 +356,93 @@ title: LLM Benchmark & Model Selection Cheatsheet
   </div>
 </div>
 
-<!-- ═══════════ SECTION 8: KEY TAKEAWAYS ═══════════ -->
+<!-- ═══════════ SECTION 8: HOW TO PICK A MODEL FOR YOUR TASK ═══════════ -->
 
-<h2 class="section-heading"><span class="icon">&#x1F3AF;</span> Section 8 &mdash; Key Takeaways</h2>
+<h2 class="section-heading"><span class="icon">&#x1F50D;</span> Section 8 &mdash; How to Pick a Model for Your Task</h2>
+
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: 1rem;">Benchmarks tell you <em>how good</em> a model is — but the right benchmark depends on your task. This section walks through how to read coding benchmarks and make a decision, using the same framework for other tasks (reasoning, writing, etc.).</p>
+
+<h2 class="section-heading"><span class="icon">&#x1F4BB;</span> Subsection: Picking a Model for Coding</h2>
+
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: 1rem;">Coding has the most structured benchmark ecosystem. The key insight: <strong>no single coding benchmark tells the whole story</strong>, and you need to read them as a cluster of signals. Here's how to decode the benchmarks for your specific coding needs:</p>
+
+<h3 class="sub" style="color:var(--accent-blue)">Step 1 — Read HumanEval first (the baseline)</h3>
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: .8rem;">HumanEval tests <em>Python function completion from docstrings</em>. It's the simplest coding benchmark, so use it as your floor:</p>
+
+<table class="bench-table" style="margin-bottom:1rem;">
+<tr><th>HumanEval Score</th><th>What It Means for Coding</th><th>Verdict</th></tr>
+<tr><td class="score-bad">&lt; 30</td><td>The model hallucinates imports, invents APIs, misses edge cases. Code needs heavy rewriting.</td><td class="score-bad">Avoid for any coding work</td></tr>
+<tr><td class="score-meh">30&ndash;59</td><td>Can write boilerplate and simple functions, but breaks on non-trivial logic. Often produces code that "looks right" but fails tests.</td><td class="score-meh">OK for snippet suggestions only</td></tr>
+<tr><td class="score-good">60&ndash;79</td><td>Reliably writes correct single-file Python functions. Will still miss edge cases in prompts, but you can trust the output direction.</td><td class="score-good">Solid for junior-dev assistant work</td></tr>
+<tr><td class="score-great">80&ndash;94</td><td>Handles most real-world function-completion tasks well. Can write complex algorithms, handle type hints, and produce clean code.</td><td class="score-great">Strong pick for daily coding use</td></tr>
+<tr><td class="score-great">95+</td><td>Virtually always produces correct code on first try for standard problems. Rarely seen outside top-tier closed models.</td><td class="score-great">Best available (API tier only)</td></tr>
+</table>
+
+<h3 class="sub" style="color:var(--accent-blue)">Step 2 — Cross-check with MBPP (breadth of coding ability)</h3>
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: .8rem;"><strong>Why it matters:</strong> HumanEval is only 164 Python problems. A model could game them during training. MBPP has ~1,000 problems with a wider range of difficulty &mdash; it tests whether the model's coding ability generalizes beyond the narrowest tasks.</p>
+
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: .8rem;"><strong>How to read the two together:</strong></p>
+
+<table class="bench-table" style="margin-bottom:1rem;">
+<tr><th>HumanEval</th><th>MBPP</th><th>What's Happening</th></tr>
+<tr><td class="score-great">High</td><td class="score-good">High</td><td class="score-great">Genuine strong coder &mdash; the model actually knows how to code across many problem types</td></tr>
+<tr><td class="score-good">60&ndash;79</td><td class="score-bad">Low (&lt;40)</td><td class="score-meh">Overfit or narrow ability &mdash; may have seen HumanEval problems in training, weaker on unfamiliar task types</td></tr>
+<tr><td class="score-meh">30&ndash;59</td><td class="score-good">High (&gt;60)</td><td class="score-good">Broad generalist &mdash; can handle variety but lacks depth in any single area. Fine for diverse tasks, not great for deep algorithms.</td></tr>
+<tr><td class="score-great">High</td><td class="score-great">High</td><td class="score-good">But check: did MBPP test your language? High HumanEval + high MBPP ≠ good at TypeScript/Rust/Java automatically.</td></tr>
+</table>
+
+<h3 class="sub" style="color:var(--accent-blue)">Step 3 — Check MultiPL-E if you code in non-Python languages</h3>
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: .8rem;">HumanEval is Python-only. MBPP is mostly Python too. <strong>MultiPL-E translates those problems into 17+ languages.</strong> If you work in TypeScript, Rust, Go, or Java, this is critical:</p>
+
+<ul style="font-size:.88rem; padding-left:1.2rem; margin-bottom: .8rem;">
+  <li>A model with 85 on HumanEval might score 55 on MultiPL-E (Java) — big gap from Python-centric training data.</li>
+  <li>Models like Qwen2.5-Coder and CodeQwen were trained on multilingual code corpora &mdash; they typically show smaller cross-language gaps.</li>
+  <li>If the model doesn't publish MultiPL-E scores, look for "code translation" benchmark results or read the model card's training data description.</li>
+</ul>
+
+<h3 class="sub" style="color:var(--accent-blue)">Step 4 — Check CRUXEval if you need executable reasoning</h3>
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: .8rem;"><strong>Why it matters:</strong> HumanEval tests "can the model generate code that passes?" but not "does the model understand how the code works?" CRUXEval tests <em>predicting output</em> of given code — it measures reasoning about code, not just generating code from scratch.</p>
+
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: .8rem;"><strong>When this matters for you:</strong> If you want a model that can <em>debug</em>, explain, or modify existing code (not just write new functions), CRUXEval scores are more predictive than HumanEval. A model scoring 70 on HumanEval but only 40 on CRUXEval will write decent functions from prompts but struggle to understand and fix buggy code you paste in.</p>
+
+<h3 class="sub" style="color:var(--accent-blue)">Step 5 — Check LiveCodeBench for current-state (not historical) ability</h3>
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: .8rem;"><strong>The contamination problem:</strong> Static benchmarks like HumanEval get "leaked" into training data over time. A model's 90 on HumanEval might partly reflect memorized test cases, not real coding ability.</p>
+
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: .8rem;"><strong>LiveCodeBench solves this</strong> by continuously adding newly published competitive programming problems. A model's LiveCodeBench score is more honest about its <em>actual current capability</em>. If a model scores 85 on HumanEval but only 40 on LiveCodeBench, it may have overfit to static benchmarks during training.</p>
+
+<h3 class="sub" style="color:var(--accent-blue)">Step 6 — SWE-bench if you need full-file / project-level coding</h3>
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: .8rem;"><strong>What it tests:</strong> Can the model fix real bugs in real open-source repositories? This is the closest benchmark to "can this model help me on my actual software project?"</p>
+
+<p style="font-size:.88rem; color: var(--muted); margin-bottom: 1rem;"><strong>Score interpretation for SWE-bench:</strong></p>
+<ul style="font-size:.88rem; padding-left:1.2rem; margin-bottom: 1rem;">
+  <li class="score-great"><strong>40%+ resolved:</strong> Can tackle real PRs in moderate-complexity repos — serious tooling candidate.</li>
+  <li class="score-good"><strong>20&ndash;39% resolved:</strong> Good for straightforward fixes, may struggle with large/complex codebases.</li>
+  <li class="score-meh"><strong>5&ndash;19% resolved:</strong> Helpful for snippets and simple edits, but unreliable as an autonomous coding agent.</li>
+  <li class="score-bad"><strong>&lt;5% resolved:</strong> Not ready for project-level work — stick to snippet suggestions.</li>
+</ul>
+
+<h3 class="sub" style="color:var(--accent-blue)">Decision flowchart: pick your coding model</h3>
+
+<table class="bench-table">
+<tr><th>Your Priority</th><th>Benchmark to Weight Heaviest</th><th>Cut-Off Recommendation</th></tr>
+<tr><td><strong>Write functions from prompts</strong></td><td class="score-good">HumanEval pass@1</td><td>At least 60 &mdash; below that, output is too unreliable</td></tr>
+<tr><td><strong>Complete / fill in code blocks</strong></td><td class="score-good">MBPP-pass@1</td><td>At least 50 &mdash; MBPP tests broader coverage than HumanEval</td></tr>
+<tr><td><strong>Coding in non-Python languages</strong></td><td class="score-good">MultiPL-E (your target language)</td><td>At least 40 in your language — cross-language gaps are common</td></tr>
+<tr><td><strong>Debug / explain existing code</strong></td><td class="score-good">CRUXEval (reasoning scores)</td><td>At least 35 — below that, the model won't understand code it didn't write</td></tr>
+<tr><td><strong>Autonomous agent (fix real PRs)</strong></td><td class="score-good">SWE-bench resolved%</td><td>At least 20% — below that, it's not reliable for project work</td></tr>
+<tr><td><strong>Current-state capability (not leaked scores)</strong></td><td class="score-good">LiveCodeBench</td><td>At least 15 — static benchmarks inflate older models' scores artificially</td></tr>
+</table>
+
+<p style="font-size:.85rem; color: var(--muted); margin-top: 1rem;"><strong>The golden rule for coding:</strong> A model with 70 HumanEval + 60 MBPP is almost always a better daily coding partner than one with 85 HumanEval + 25 MBPP (overfit / narrow). Look for <em>broad strength across the coding benchmark cluster</em>, not peak performance on any single test.</p>
+
+<!-- ═══════════ SECTION 9: KEY TAKEAWAYS ═══════════ -->
+
+<h2 class="section-heading"><span class="icon">&#x1F3AF;</span> Section 9 &mdash; Key Takeaways</h2>
 
 <div class="card-grid">
   <div class="card-accent-left" style="border-left: 4px solid var(--accent-green); flex: 1 1 200px;">
     <h3><strong>1. Task first, benchmarks second</strong></h3>
-    <p style="font-size:.86rem; color: var(--muted);">Pick the right task &rarr; pick models scoring well on THAT benchmark &rarr; filter by your hardware constraints. In that order.</p>
+    <p style="font-size:.86rem; color: var(--muted);">Pick the right task &rarr; pick models scoring well on THAT benchmark &rarr; filter by your hardware constraints &rarr; then discover what models exist for that task (Section 8). In that order.</p>
   </div>
   <div class="card-accent-left" style="border-left: 4px solid var(--accent-blue); flex: 1 1 200px;">
     <h3><strong>2. Size matters, but efficiency matters more</strong></h3>
