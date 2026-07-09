@@ -6,6 +6,7 @@ Quick-reference guides for developers, built with Jekyll and deployed via GitHub
 
 - [**Git Cheatsheet**](cheatsheets/git-cheatsheet.html) — Beginner-friendly reference for version control. Print it out and keep it on your desk!
 - [**LLM Benchmark & Model Selection Cheatsheet**](cheatsheets/llm-benchmark-cheatsheet.html) — Understand benchmarks, pick the right model for your task — Ollama & Hugging Face edition.
+- [**Visual Studio Code Extension Anatomy**](cheatsheets/vscode-extension-anatomy.html) — Understand the structure and components of VS Code extensions.
 
 ## Writing New Sheets
 
