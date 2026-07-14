@@ -7,6 +7,8 @@ Quick-reference guides for developers, built with Jekyll and deployed via GitHub
 - [**Git Cheatsheet**](cheatsheets/git-cheatsheet.html) — Beginner-friendly reference for version control. Print it out and keep it on your desk!
 - [**LLM Benchmark & Model Selection Cheatsheet**](cheatsheets/llm-benchmark-cheatsheet.html) — Understand benchmarks, pick the right model for your task — Ollama & Hugging Face edition.
 - [**Visual Studio Code Extension Anatomy**](cheatsheets/vscode-extension-anatomy.html) — Understand the structure and components of VS Code extensions.
+- [**Getting Started with VS Code Extensions**](cheatsheets/vscode-extension-getting-started.html) — A step-by-step guide to create your first Visual Studio Code extension.
+- [**OpenTelemetry Cheat Sheet**](cheatsheets/opentelemetry-cheatsheet.html) — Understand and use OpenTelemetry for observability in distributed systems.
 
 ## Writing New Sheets
 
@@ -20,6 +22,15 @@ title: Sheet Title
 ```
 
 The shared layout (`_layouts/default.html`) and centralized CSS are embedded via `_includes/head.html`. Use any of the CSS classes defined there (badges, cards, charts, tables) — no inline styles needed.
+
+## New Sheet Template
+
+When creating a new sheet, consider these sections:
+- Coversheet with title and description
+- Key concepts or prerequisites
+- Step-by-step instructions
+- Code examples and command references
+- Quick tips and best practices
 
 ### Classes Cheat Sheet
 

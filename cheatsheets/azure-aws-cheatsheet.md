@@ -80,6 +80,7 @@ title: Azure to AWS Resource Mapping
       <li><strong>Azure Log Analytics</strong> ↔ <strong>AWS CloudWatch Logs</strong></li>
       <li><strong>Azure Automation</strong> ↔ <strong>AWS Systems Manager</strong></li>
       <li><strong>Azure Advisor</strong> ↔ <strong>AWS Trusted Advisor</strong></li>
+      <li><strong>Azure Application Insights</strong> ↔ <strong>AWS X-Ray + CloudWatch Logs</strong></li>
     </ul>
   </div>
 

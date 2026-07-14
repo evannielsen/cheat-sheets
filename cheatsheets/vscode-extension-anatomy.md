@@ -10,7 +10,102 @@ title: Visual Studio Code Extension Anatomy
 
 <div class="card-grid">
   <div class="card-item">
-    <h3><span class="icon">&#x1F4D6;</span> <span class="accent-blue">Core Files</span></h3>
+    <h3><span class="icon">&#x1F4D6;</span> <span class="accent-blue">Prerequisites</span></h3>
+    <ul>
+      <li>Node.js (version 18 or higher recommended)</li>
+      <li>npm (usually comes with Node.js)</li>
+      <li>Visual Studio Code</li>
+      <li>Basic knowledge of JavaScript/TypeScript</li>
+    </ul>
+  </div>
+
+  <div class="card-item">
+    <h3><span class="icon">&#x1F4CA;</span> <span class="accent-green">Setup Steps</span></h3>
+    <ol>
+      <li>Install the Yeoman generator for VS Code extensions</li>
+      <li>Create a new extension project</li>
+      <li>Open the project in VS Code</li>
+      <li>Install dependencies</li>
+      <li>Run and test your extension</li>
+    </ol>
+  </div>
+
+  <div class="card-item">
+    <h3><span class="icon">&#x1F9E0;</span> <span class="accent-purple">Key Concepts</span></h3>
+    <ul>
+      <li>package.json - Extension manifest file</li>
+      <li>extension.js/ts - Main entry point</li>
+      <li>Activation events - When your extension runs</li>
+      <li>Commands - User-triggered actions</li>
+    </ul>
+  </div>
+</div>
+
+<h2 class="section-heading"><span class="icon">&#x1F4D8;</span> Getting Started</h2>
+
+<div class="card-grid">
+  <div class="card-item">
+    <h3><span class="icon">&#x1F527;</span> Step 1: Install Prerequisites</h3>
+    <p>Ensure you have Node.js and npm installed:</p>
+    <pre><code>node --version
+npm --version</code></pre>
+    <p>If not installed, download from <a href="https://nodejs.org/">nodejs.org</a></p>
+  </div>
+
+  <div class="card-item">
+    <h3><span class="icon">&#x1F528;</span> Step 2: Install Yeoman and Generator</h3>
+    <p>Install the required tools globally:</p>
+    <pre><code>npm install -g yo generator-code</code></pre>
+  </div>
+
+  <div class="card-item">
+    <h3><span class="icon">&#x1F4D1;</span> Step 3: Generate Extension</h3>
+    <p>Run the generator to create a new extension:</p>
+    <pre><code>yo code</code></pre>
+    <p>Follow the prompts to choose your extension type and settings.</p>
+  </div>
+
+  <div class="card-item">
+    <h3><span class="icon">&#x1F4E6;</span> Step 4: Open in VS Code</h3>
+    <p>Open the generated folder in VS Code:</p>
+    <pre><code>code my-extension-folder</code></pre>
+  </div>
+
+  <div class="card-item">
+    <h3><span class="icon">&#x1F504;</span> Step 5: Install Dependencies</h3>
+    <p>Navigate to your extension folder and install dependencies:</p>
+    <pre><code>npm install</code></pre>
+  </div>
+
+  <div class="card-item">
+    <h3><span class="icon">&#x1F4A1;</span> Step 6: Run Extension</h3>
+    <p>In VS Code, press <code>F5</code> to launch the extension in a new VS Code window.</p>
+    <p>Try your commands and test functionality.</p>
+  </div>
+</div>
+
+<div class="card-standalone">
+  <h2 class="section-heading"><span class="icon">&#x26A1;</span> Quick Tips</h2>
+  <div class="mini-grid">
+    <div class="mini-item">Use <code>console.log()</code> for debugging</div>
+    <div class="mini-item">Check the Output panel for logs</div>
+    <div class="mini-item">Always dispose of subscriptions</div>
+    <div class="mini-item">Follow VS Code's API guidelines</div>
+  </div>
+</div>
+
+<div class="card-grid" style="margin-bottom: 1rem;">
+  <div class="card-item">
+    <div class="tip-box"><strong>Tip:</strong> The Extension Development Host window is your testing environment. You can test commands and features here before publishing.</div>
+  </div>
+  <div class="card-item">
+    <div class="warning-box"><strong>Warning:</strong> Don't forget to dispose of event listeners when deactivating to prevent memory leaks.</div>
+  </div>
+</div>
+
+<div class="card-grid">
+  <div class="card-item">
+    <h3><span class="icon">&#x1F4DC;</span> Core Files</h3>
     <ul>
       <li><code>package.json</code> - The manifest that defines your extension</li>
       <li>Main entry point (<code>extension.js</code> or <code>extension.ts</code>)</li>
@@ -192,6 +287,77 @@ const mySetting = config.get('mySetting');</code></pre>
   </div>
   <div class="card-item">
     <p><strong>Dependencies</strong> - List external dependencies clearly</p>
+  </div>
+</div>
+
+<h2 class="section-heading"><span class="icon">&#x1F4B0;</span> Development Workflow</h2>
+
+<div class="card-grid">
+  <div class="card-item">
+    <h3><span class="icon">&#x1F4DC;</span> package.json</h3>
+    <p>Defines your extension's metadata and configuration:</p>
+    <ul>
+      <li>Name, version, description</li>
+      <li>Activation events</li>
+      <li>Commands and contributions</li>
+      <li>Dependencies</li>
+    </ul>
+  </div>
+
+  <div class="card-item">
+    <h3><span class="icon">&#x1F50D;</span> Main Entry Point</h3>
+    <p>The extension's main file (extension.js or extension.ts):</p>
+    <ul>
+      <li>Register commands</li>
+      <li>Set up event listeners</li>
+      <li>Initialize components</li>
+      <li>Handle activation/deactivation</li>
+    </ul>
+  </div>
+
+  <div class="card-item">
+    <h3><span class="icon">&#x1F4A5;</span> Testing & Debugging</h3>
+    <p>Use VS Code's built-in debugging features:</p>
+    <ul>
+      <li>Set breakpoints in your code</li>
+      <li>Use F5 to launch debug session</li>
+      <li>Test in the Extension Development Host</li>
+    </ul>
+  </div>
+
+  <div class="card-item">
+    <h3><span class="icon">&#x1F4B0;</span> Publishing</h3>
+    <p>Before publishing:</p>
+    <ul>
+      <li>Test thoroughly</li>
+      <li>Update README.md</li>
+      <li>Version your extension</li>
+      <li>Package for distribution</li>
+    </ul>
+  </div>
+</div>
+
+<h2 class="section-heading"><span class="icon">&#x1F4AC;</span> Common Commands</h2>
+
+<div class="card-grid">
+  <div class="card-item">
+    <p><strong>Create new extension:</strong></p>
+    <pre><code>yo code</code></pre>
+  </div>
+
+  <div class="card-item">
+    <p><strong>Install dependencies:</strong></p>
+    <pre><code>npm install</code></pre>
+  </div>
+
+  <div class="card-item">
+    <p><strong>Run extension:</strong></p>
+    <pre><code>F5 or Ctrl+F5</code></pre>
+  </div>
+
+  <div class="card-item">
+    <p><strong>Package extension:</strong></p>
+    <pre><code>npm run package</code></pre>
   </div>
 </div>
 
