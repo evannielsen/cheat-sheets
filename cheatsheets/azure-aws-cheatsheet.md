@@ -118,6 +118,53 @@ title: Azure to AWS Resource Mapping
   </div>
 </div>
 
+<h2 class="section-heading"><span class="icon">&#x1F3E2;</span> Account Hierarchy & Organization</h2>
+
+<div class="card-grid">
+  <div class="card-item" style="grid-column: 1 / -1;">
+    <h3><span class="icon">&#x1F3EA;</span> Hierarchical Mapping</h3>
+    <p>The following table shows how Azure's account hierarchy maps to AWS equivalents.</p>
+
+    <table style="width:100%; border-collapse: collapse; margin-top: 0.75rem;">
+      <thead>
+        <tr style="background: #161b22;">
+          <th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid #30363d;">Azure</th>
+          <th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid #30363d;">↔</th>
+          <th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid #30363d;">AWS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 0.5rem; border-bottom: 1px solid #30363d;"><strong>Tenant</strong></td>
+          <td style="padding: 0.5rem; border-bottom: 1px solid #30363d; text-align: center;">↔</td>
+          <td style="padding: 0.5rem; border-bottom: 1px solid #30363d;"><strong>AWS Organization</strong></td>
+        </tr>
+        <tr style="background: #161b22;">
+          <td style="padding: 0.5rem; border-bottom: 1px solid #30363d;"><strong>&nbsp;&nbsp;Subscription</strong></td>
+          <td style="padding: 0.5rem; border-bottom: 1px solid #30363d; text-align: center;">↔</td>
+          <td style="padding: 0.5rem; border-bottom: 1px solid #30363d;"><strong>&nbsp;&nbsp;AWS Account</strong></td>
+        </tr>
+        <tr>
+          <td style="padding: 0.5rem; border-bottom: 1px solid #30363d;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;Resource Group</strong></td>
+          <td style="padding: 0.5rem; border-bottom: 1px solid #30363d; text-align: center;">↔</td>
+          <td style="padding: 0.5rem; border-bottom: 1px solid #30363d;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;No direct equivalent**</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top: 0.75rem;"><em>💡 AWS does not have a direct equivalent to Azure Resource Groups. In AWS, resources are organized using:</em></p>
+    <ul>
+      <li><strong>Tags</strong> — key-value pairs applied to resources for logical grouping and filtering (closest analogy to resource groups)</li>
+      <li><strong>Resource Groups service</strong> — AWS also offers a <code>Resource Groups</code> tool, but it's primarily for management/console views, not a fundamental boundary like Azure Resource Groups</li>
+      <li><strong>Accounts within an Organization</strong> — logical isolation and billing boundaries (equivalent to Azure Subscriptions)</li>
+    </ul>
+
+    <p style="margin-top: 0.75rem;"><strong>💰 Billing note:</strong> In Azure, cost is tracked per subscription. In AWS, cost is tracked per account, with <strong>AWS Consolidated Billing</strong> (via Organizations) providing a consolidated view across multiple accounts — similar to how Azure Cost Management works across subscriptions in a tenant.</p>
+
+    <div class="note" style="margin-top: 0.75rem;"><strong>** Important distinction:</strong> Azure Resource Groups are a fundamental deployment and management boundary — you create, deploy, and delete resources within them. AWS lacks this concept; instead, AWS users organize by account boundaries, resource tagging conventions, and infrastructure-as-code tooling (CloudFormation stacks, Terraform workspaces) for grouping.</div>
+  </div>
+</div>
+
 <h2 class="section-heading"><span class="icon">&#x1F4D8;</span> Detailed Mapping Guide</h2>
 
 <div class="card-grid">

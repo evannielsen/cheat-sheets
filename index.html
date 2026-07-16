@@ -10,8 +10,8 @@
 body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
 .index-page h1 { font-size: 2.4rem; margin-bottom: .5rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .subtitle { color: var(--muted); margin-bottom: 3rem; font-size: 1.05rem; }
-.cards { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; max-width: 800px; }
-.card { background: #161b22; border: 1px solid var(--border); border-radius: 12px; padding: 2rem 2.5rem; text-decoration: none; color: var(--text); transition: border-color .2s, transform .15s; min-width: 280px; text-align: center; }
+	.cards { display: grid; gap: 1.5rem; grid-template-columns: repeat(3, 1fr); }
+.card { background: #161b22; border: 1px solid var(--border); border-radius: 12px; padding: 2rem; text-decoration: none; color: var(--text); transition: border-color .2s, transform .15s; min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 .card:hover { border-color: var(--accent-blue); transform: translateY(-3px); }
 .card .icon { font-size: 2.5rem; margin-bottom: .75rem; }
 .card h2 { font-size: 1.2rem; margin-bottom: .4rem; }
@@ -24,6 +24,11 @@ body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; b
 <p class="subtitle">Quick-reference guides for developers</p>
 
 <div class="cards">
+  <a href="cheatsheets/dotnet-tool-cheatsheet.html" class="card">
+    <div class="icon">&#x1F6E0;</div>
+    <h2>.NET Tool Anatomy Cheatsheet</h2>
+    <p>Build, distribute, and publish command-line tools with the .NET CLI</p>
+  </a>
   <a href="cheatsheets/git-cheatsheet.html" class="card">
     <div class="icon">&#x1F4D6;</div>
     <h2>Git Cheatsheet</h2>
